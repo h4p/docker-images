@@ -1,0 +1,33 @@
+version: "3.8"
+
+
+services:
+    munkireport:
+        container_name: munkireport
+        image: munkireport/munkireport-php
+        # https://hub.docker.com/r/munkireport/munkireport-php/
+        env_file: ./munkireport.env
+        volumes:
+            - ./data/local:/var/munkireport/local:rw
+        networks:
+            - munki
+        ports:
+            - 8081:80
+        restart: always
+        depends_on:
+            - mysql-munkireport
+
+    mysql-munkireport:
+        container_name: mysql-munkireport
+        image: mysql:5.7
+        # https://hub.docker.com/_/mysql/
+        env_file: ./mysql-munkireport.env
+        volumes:
+            - ./data/mysql-munkireport:/var/lib/mysql:rw
+        networks:
+            - munki
+        restart: always
+
+networks:
+  munki:
+    driver: bridge

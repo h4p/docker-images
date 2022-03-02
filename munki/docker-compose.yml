@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+
+  munki_server:
+    image: groob/docker-munki:latest
+    container_name: munki-server
+    hostname: localhost
+    ports:
+      - 80:80
+    volumes:
+      - "./munki_repo_local:/munki_repo"
+
+
+
